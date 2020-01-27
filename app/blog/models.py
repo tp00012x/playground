@@ -1,6 +1,6 @@
 from core.models import User
 from django.db import models
-from django.db.models import Q, F
+from django.db.models import Q
 
 
 class Post(models.Model):
