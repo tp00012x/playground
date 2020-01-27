@@ -4,9 +4,20 @@ from django.db.models import Q, F
 
 
 class Post(models.Model):
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user'],
+                condition=Q(is_featured=True),
+                name='unique featured post per user'
+            ),
+        ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     post = models.TextField()
+    is_featured = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
