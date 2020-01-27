@@ -30,7 +30,8 @@ class Comment(models.Model):
     comment = models.CharField(max_length=500)
 
     def __str__(self):
-        return self.title
+        total_likes = self.like_set.all().count()
+        return f'{self.user.name} - {self.title} - total likes: {total_likes}'
 
 
 class Like(models.Model):
