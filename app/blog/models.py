@@ -1,6 +1,6 @@
-from django.db import models
-
 from core.models import User
+from django.db import models
+from django.db.models import Q, F
 
 
 class Post(models.Model):
@@ -23,6 +23,20 @@ class Comment(models.Model):
 
 
 class Like(models.Model):
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'comment'],
+                name='unique like per comment'
+            ),
+        ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     is_positive = models.BooleanField(blank=True, null=True)
+
+    def __str__(self):
+        positive_or_negative = 'Positive' if self.is_positive else 'Negative'
+        return (
+            f"{self.user.name} - {self.comment.title} - {positive_or_negative}"
+        )
