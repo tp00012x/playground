@@ -16,7 +16,7 @@ class Post(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    post = models.TextField()
+    content = models.TextField()
     is_featured = models.BooleanField(default=False)
 
     def __str__(self):
@@ -50,5 +50,5 @@ class Like(models.Model):
     def __str__(self):
         positive_or_negative = 'Positive' if self.is_positive else 'Negative'
         return (
-            f"{self.user.name} - {self.comment.title} - {positive_or_negative}"
+            f'{self.user.name} - {self.comment.title} - {positive_or_negative}'
         )
